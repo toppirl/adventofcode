@@ -1,0 +1,11 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "create": "node createFolder.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
