@@ -184,11 +184,11 @@ else {
 [d22-problem]: https://adventofcode.com/2024/day/22
 [d24-problem]: https://adventofcode.com/2024/day/24
 [d25-problem]: https://adventofcode.com/2024/day/25
-[d01-solution]: 2024/soltuions/day01.js
-[d02-solution]: 2024/soltuions/day02.js
-[d03-solution]: 2024/soltuions/day03.js
-[d04-solution]: 2024/soltuions/day04.js
-[d05-solution]: 2024/soltuions/day05.js
+[d01-solution]: 2024/solutions/day01.js
+[d02-solution]: 2024/solutions/day02.js
+[d03-solution]: 2024/solutions/day03.js
+[d04-solution]: 2024/solutions/day04.js
+[d05-solution]: 2024/solutions/day05.js
 [d06-solution]: 2024/solutions/day06.js
 [d07-solution]: 2024/solutions/day07.js
 [d08-solution]: 2024/solutions/day08.js
