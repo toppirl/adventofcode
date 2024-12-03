@@ -6,55 +6,32 @@ const filePath = path.join(__dirname, 'input.txt')
 
 // Read the file asynchronously
 fs.readFile(filePath, 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading the file:', err)
-    return
-  }
   const lines = data.split('\n')
-  let safeCount = 0
-  let notSafeCount = 0
+  let safeReportScore = 0
   lines.forEach((line, index) => {
-    let safe = true
-    let up = false
-    let down = false
-    const nums = line.split(' ').map(Number)
-    for (let i = 0; i < nums.length - 1; i++) {
-      if (nums[i] === nums[i + 1]) {
-        safe = false
-        break
-      }
-      if (nums[i] > nums[i + 1]) {
-        down = true
-
-        if (
-          Math.abs(nums[i] - nums[i + 1]) < 1 ||
-          Math.abs(nums[i] - nums[i + 1]) > 3
-        ) {
-          safe = false
-        }
-      }
-      if (nums[i] < nums[i + 1]) {
-        // console.log(nums[i] < nums[i + 1])
-        up = true
-        if (
-          Math.abs(nums[i + 1] - nums[i]) < 1 ||
-          Math.abs(nums[i + 1] - nums[i]) > 3
-        ) {
-          safe = false
-        }
-        // console.log(safe)
-      }
-
-      if (up && down) {
-        safe = false
-      }
-    }
-    if (safe) safeCount++
-    if (!safe) notSafeCount++
-
-    console.log(`${nums} is marked as safe ${safe}`)
+    const report = line.split(' ').map(Number)
+    if (checkSafetyScore(report)) safeReportScore += 1
   })
-  console.log(safeCount)
-  console.log(notSafeCount)
-  console.log(safeCount + notSafeCount)
+  console.log(safeReportScore)
 })
+
+const checkSafetyScore = (report) => {
+  let increasing
+  for (let i = 1; i < report.length; i++) {
+    let score
+    let previousLevel = report[i - 1]
+    let currentLevel = report[i]
+
+    score = currentLevel - previousLevel
+
+    if (score < -3 || score > 3 || score === 0) return false
+    if (increasing === true && score < 0) return false
+    if (increasing === false && score > 0) return false
+    if (score < 0) {
+      increasing = false
+    } else {
+      increasing = true
+    }
+  }
+  return true
+}
