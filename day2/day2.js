@@ -10,7 +10,17 @@ fs.readFile(filePath, 'utf8', (err, data) => {
   let safeReportScore = 0
   lines.forEach((line, index) => {
     const report = line.split(' ').map(Number)
-    if (checkSafetyScore(report)) safeReportScore += 1
+    if (checkSafetyScore(report)) {
+      safeReportScore += 1
+    } else {
+      for (let i = 0; i < report.length; i++) {
+        let reportCopy = report.slice()
+        reportCopy.splice(i, 1)
+        if (checkSafetyScore(reportCopy)) {
+          return (safeReportScore += 1)
+        }
+      }
+    }
   })
   console.log(safeReportScore)
 })
