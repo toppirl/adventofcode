@@ -1,31 +1,27 @@
-const fs = require('fs')
-const path = require('path')
+import { readInput } from '../../utils.js'
 
-// Construct the path to the text file in the same directory
-const filePath = path.join(__dirname, 'input.txt')
+const lines = await readInput('../day2/input.txt')
 
 // Read the file asynchronously
-fs.readFile(filePath, 'utf8', (err, data) => {
-  const lines = data.split('\n')
-  let safeReportScore = 0
-  lines.forEach((line, index) => {
-    const report = line.split(' ').map(Number)
-    if (checkSafetyScore(report)) {
-      safeReportScore += 1
-    } else {
-      for (let i = 0; i < report.length; i++) {
-        let reportCopy = report.slice()
-        reportCopy.splice(i, 1)
-        if (checkSafetyScore(reportCopy)) {
-          return (safeReportScore += 1)
-        }
+
+let safeReportScore = 0
+lines.forEach((line, index) => {
+  const report = line.split(' ').map(Number)
+  if (checkSafetyScore(report)) {
+    safeReportScore += 1
+  } else {
+    for (let i = 0; i < report.length; i++) {
+      let reportCopy = report.slice()
+      reportCopy.splice(i, 1)
+      if (checkSafetyScore(reportCopy)) {
+        return (safeReportScore += 1)
       }
     }
-  })
-  return safeReportScore
+  }
 })
+console.log(safeReportScore)
 
-const checkSafetyScore = (report) => {
+function checkSafetyScore(report) {
   let increasing
   for (let i = 1; i < report.length; i++) {
     let score
