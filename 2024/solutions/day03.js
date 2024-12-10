@@ -34,5 +34,5 @@ async function partTwo(path) {
   }, 0)
 }
 
-// console.log(await partOne('../day3/test.txt'))
+console.log(await partOne('../day3/input.txt'))
 console.log(await partTwo('../day3/input.txt'))
