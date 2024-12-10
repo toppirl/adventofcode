@@ -1,8 +1,39 @@
-const regex = /mul\(\s*(-?\d+(?:\.\d+)?),*(-?\d+(?:\.\d+)?)\s*\)/
+import { readInput } from '../../utils.js'
 
-const myArray =
-  'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))'.matchAll(
-    regex
+function execute(operation) {
+  const [, a, b] = operation.match(/mul\((.*)\,(.*)\)/)
+  return Number(a) * Number(b)
+}
+
+async function partOne(path) {
+  const lines = await readInput(path)
+  const memory = lines.join('')
+  return (memory.match(/mul\(\d{1,3}\,\d{1,3}\)/g) || []).reduce(
+    (sum, operation) => {
+      return sum + execute(operation)
+    },
+    0
   )
+}
 
-console.log(myArray)
+async function partTwo(path) {
+  let enabled = true
+  const lines = await readInput(path)
+  const memory = lines.join('')
+  const operations = (
+    memory.match(/mul\(\d{1,3}\,\d{1,3}\)|do\(\)|don\'t\(\)/g) || []
+  ).reduce((sum, operation) => {
+    if (operation === 'do()') {
+      enabled = true
+      return sum
+    } else if (operation === "don't()" || !enabled) {
+      enabled = false
+      return sum
+    }
+    if (enabled && operation !== 'do()') return sum + execute(operation)
+  }, 0)
+  return operations
+}
+
+// console.log(await partOne('../day3/test.txt'))
+console.log(await partTwo('../day3/input.txt'))

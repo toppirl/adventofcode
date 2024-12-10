@@ -11,8 +11,7 @@ lines.forEach((line, index) => {
     safeReportScore += 1
   } else {
     for (let i = 0; i < report.length; i++) {
-      let reportCopy = report.slice()
-      reportCopy.splice(i, 1)
+      let reportCopy = report.toSpliced(i, 1)
       if (checkSafetyScore(reportCopy)) {
         return (safeReportScore += 1)
       }
