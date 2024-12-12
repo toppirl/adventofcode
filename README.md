@@ -277,10 +277,10 @@ return count
 [d24-problem]: https://adventofcode.com/2024/day/24
 [d25-problem]: https://adventofcode.com/2024/day/25 -->
 
-[d01-solution]: solutions/day01.js
-[d02-solution]: solutions/day02.js
-[d03-solution]: solutions/day03.js
-[d04-solution]: solutions/day04.js
+[d01-solution]: 2024/solutions/day01.js
+[d02-solution]: 2024/solutions/day02.js
+[d03-solution]: 2024/solutions/day03.js
+[d04-solution]: 2024/solutions/day04.js
 
 <!-- [d05-solution]: solutions/day05.js
 [d06-solution]: solutions/day06.js
@@ -303,7 +303,7 @@ return count
 [d24-solution]: solutions/day24.js
 [d25-solution]: solutions/day25.js -->
 
-[d01-input]: day1/input.txt
-[d02-input]: day2/input.txt
-[d03-input]: day3/input.txt
-[d04-input]: day4/input.txt
+[d01-input]: 2024/day1/input.txt
+[d02-input]: 2024/day2/input.txt
+[d03-input]: 2024/day3/input.txt
+[d04-input]: 2024/day4/input.txt
