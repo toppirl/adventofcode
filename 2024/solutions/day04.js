@@ -103,5 +103,87 @@ async function partOne(path) {
   return count
 }
 
-// console.log(await partOne('../day4/sample.txt'))
-console.log(await partOne('../day4/input.txt'))
+async function partTwo(path) {
+  const grid = await readInput(path)
+  const rows = grid.length
+  const cols = grid[0].length
+
+  let count = 0
+
+  function isUpRight(startRow, startCol) {
+    let row = startRow
+    let col = startCol
+    const letters = []
+    while (row >= 0 && col < cols) {
+      letters.push(grid[row][col])
+      row -= 1
+      col += 1
+    }
+
+    return letters.join('').startsWith('MAS')
+  }
+
+  function isUpLeft(startRow, startCol) {
+    let row = startRow
+    let col = startCol
+    const letters = []
+    while (row >= 0 && col >= 0) {
+      letters.push(grid[row][col])
+      row -= 1
+      col -= 1
+    }
+
+    return letters.join('').startsWith('MAS')
+  }
+
+  function isDownLeft(startRow, startCol) {
+    let row = startRow
+    let col = startCol
+    const letters = []
+    while (row < rows && col >= 0) {
+      letters.push(grid[row][col])
+      row += 1
+      col -= 1
+    }
+
+    return letters.join('').startsWith('MAS')
+  }
+
+  function isDownRight(startRow, startCol) {
+    let row = startRow
+    let col = startCol
+    const letters = []
+    while (row < rows && col < cols) {
+      letters.push(grid[row][col])
+      row += 1
+      col += 1
+    }
+
+    return letters.join('').startsWith('MAS')
+  }
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const letter = grid[row][col]
+
+      if (letter === 'M') {
+        if (isDownRight(row, col) && isUpRight(row + 2, col)) count++
+        if (isDownLeft(row, col) && isUpLeft(row + 2, col)) count++
+        if (isUpLeft(row, col)) {
+          if (isUpRight(row, col - 2)) {
+            count++
+          }
+        }
+        if (isDownLeft(row, col)) {
+          if (isDownRight(row, col - 2)) {
+            count++
+          }
+        }
+      }
+    }
+  }
+  return count
+}
+
+console.log(await partTwo('../day4/input.txt'))
+// console.log(await partTwo('../day4/sample.txt'))
