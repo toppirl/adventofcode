@@ -5,8 +5,8 @@
 - [Day 1 - Historian Hysteria][d01]
 - [Day 2 - Red-Nosed Reports][d02]
 - [Day 3 - Mull It Over][d03]
+- [Day 4 - Ceres Search][d04]
 <!--
-- [Day 4 - xxx][d04]
 - [Day 5 - xxx][d05]
 - [Day 6 - xxx][d06]
 - [Day 7 - xxx][d07]
@@ -131,7 +131,96 @@ else {
 
 ### Part 1
 
+```javascript
+function execute(operation) {
+  const [, a, b] = operation.match(/mul\((.*)\,(.*)\)/)
+  return Number(a) * Number(b)
+}
+
+async function partOne(path) {
+  const lines = await readInput(path)
+  const memory = lines.join('')
+  return (memory.match(/mul\(\d{1,3}\,\d{1,3}\)/g) || []).reduce(
+    (sum, operation) => {
+      return sum + execute(operation)
+    },
+    0
+  )
+}
+```
+
 ### Part 2
+
+```javascript
+async function partTwo(path) {
+  let enabled = true
+  const lines = await readInput(path)
+  const memory = lines.join('')
+  return (
+    memory.match(/mul\(\d{1,3}\,\d{1,3}\)|do\(\)|don\'t\(\)/g) || []
+  ).reduce((sum, operation) => {
+    if (operation === 'do()') {
+      enabled = true
+    } else if (operation === "don't()" || !enabled) {
+      enabled = false
+    } else if (enabled) {
+      sum += execute(operation)
+    }
+    return sum
+  }, 0)
+}
+```
+
+## Day 4 - Ceres Search
+
+[Problem][d04-problem] — [Complete solution][d04-solution] — [Input][d04-input] - [Back to top][top]
+
+### Part 1
+
+```javascript
+for (let row = 0; row < rows; row++) {
+  for (let col = 0; col < cols; col++) {
+    const letter = grid[row][col]
+    if (letter === 'X') {
+      if (isAcross(row, col)) count++
+      if (isReverse(row, col)) count++
+      if (isDown(row, col)) count++
+      if (isUp(row, col)) count++
+      if (isUpRight(row, col)) count++
+      if (isUpLeft(row, col)) count++
+      if (isDownLeft(row, col)) count++
+      if (isDownRight(row, col)) count++
+    }
+  }
+}
+return count
+```
+
+### Part 2
+
+```javascript
+for (let row = 0; row < rows; row++) {
+  for (let col = 0; col < cols; col++) {
+    const letter = grid[row][col]
+
+    if (letter === 'M') {
+      if (isDownRight(row, col) && isUpRight(row + 2, col)) count++
+      if (isDownLeft(row, col) && isUpLeft(row + 2, col)) count++
+      if (isUpLeft(row, col)) {
+        if (isUpRight(row, col - 2)) {
+          count++
+        }
+      }
+      if (isDownLeft(row, col)) {
+        if (isDownRight(row, col - 2)) {
+          count++
+        }
+      }
+    }
+  }
+}
+return count
+```
 
 ---
 
@@ -139,8 +228,9 @@ else {
 [d01]: #day-1---historian-hysteria
 [d02]: #day-2---red-nosed-reports
 [d03]: #day-3---mull-it-over
-[d04]: #day-4---
-[d05]: #day-5---
+[d04]: #day-4---ceres-search
+
+<!-- [d05]: #day-5---
 [d06]: #day-6---
 [d07]: #day-7---
 [d08]: #day-8---
@@ -159,12 +249,14 @@ else {
 [d21]: #day-21---
 [d22]: #day-22---
 [d24]: #day-24---
-[d25]: #day-25---
+[d25]: #day-25--- -->
+
 [d01-problem]: https://adventofcode.com/2024/day/1
 [d02-problem]: https://adventofcode.com/2024/day/2
 [d03-problem]: https://adventofcode.com/2024/day/3
 [d04-problem]: https://adventofcode.com/2024/day/4
-[d05-problem]: https://adventofcode.com/2024/day/5
+
+<!-- [d05-problem]: https://adventofcode.com/2024/day/5
 [d06-problem]: https://adventofcode.com/2024/day/6
 [d07-problem]: https://adventofcode.com/2024/day/7
 [d08-problem]: https://adventofcode.com/2024/day/8
@@ -183,12 +275,14 @@ else {
 [d21-problem]: https://adventofcode.com/2024/day/21
 [d22-problem]: https://adventofcode.com/2024/day/22
 [d24-problem]: https://adventofcode.com/2024/day/24
-[d25-problem]: https://adventofcode.com/2024/day/25
+[d25-problem]: https://adventofcode.com/2024/day/25 -->
+
 [d01-solution]: solutions/day01.js
 [d02-solution]: solutions/day02.js
 [d03-solution]: solutions/day03.js
 [d04-solution]: solutions/day04.js
-[d05-solution]: solutions/day05.js
+
+<!-- [d05-solution]: solutions/day05.js
 [d06-solution]: solutions/day06.js
 [d07-solution]: solutions/day07.js
 [d08-solution]: solutions/day08.js
@@ -207,7 +301,9 @@ else {
 [d21-solution]: solutions/day21.js
 [d22-solution]: solutions/day22.js
 [d24-solution]: solutions/day24.js
-[d25-solution]: solutions/day25.js
+[d25-solution]: solutions/day25.js -->
+
 [d01-input]: day1/input.txt
 [d02-input]: day2/input.txt
 [d03-input]: day3/input.txt
+[d04-input]: day4/input.txt
